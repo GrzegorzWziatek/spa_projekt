@@ -8,10 +8,8 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope, letters) {
+
+    console.log('main app')
+
   });
