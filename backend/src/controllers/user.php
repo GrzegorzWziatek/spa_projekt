@@ -22,6 +22,7 @@ $app->get('/login', function (Request $request, Silex\Application $app) {
         $response = new JsonResponse();
         $response->setData(array('status'=> 'OK'));
         $response->headers->setCookie(new Cookie('uId', $result->id));
+        $response->headers->setCookie(new Cookie('login', $result->name));
 
         return $response;
     } else {
