@@ -2,9 +2,6 @@
 
 
 RewriteEngine On
-RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^/api/(.*)$ backend/web/index.php [L,QSA]
-
 
 RewriteCond %{REQUEST_URI} !^/angular/dist
 RewriteRule ^(.*)$ angular/dist/$1 [L,QSA]
