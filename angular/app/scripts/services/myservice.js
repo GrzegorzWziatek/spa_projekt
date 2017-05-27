@@ -12,7 +12,6 @@ angular.module('carpoolingApp')
   .service('myservice', function () {
     this.myFunction = function () {
       console.log('myFunction');
-    }
-
+    };
 
   });

@@ -8,8 +8,8 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('MainCtrl', function ($scope, letters) {
+  .controller('MainCtrl', function () {
 
-    console.log('main app')
+    console.log('main app');
 
   });

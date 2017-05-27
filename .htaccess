@@ -1,14 +1,10 @@
-#### FIX IT
+#### FIX IT   
+
 
 RewriteEngine On
-RewriteBase /
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^/api/(.*)$ backend/web/index.php [L,QSA]
 
-RewriteCond %{REQUEST_URI} !^/angular/dist/
-RewriteRule ^/api/(.*)$ backend/web/index.php [L]
 
-RewriteCond %{REQUEST_URI} ^/angular/dist/
-# Don't change the following two lines.
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-# Change 'subdirectory' to be the directory you will use for your main domain.
-RewriteRule ^(.*)$ /angular/dist/$1
+RewriteCond %{REQUEST_URI} !^/angular/dist
+RewriteRule ^(.*)$ angular/dist/$1 [L,QSA]
