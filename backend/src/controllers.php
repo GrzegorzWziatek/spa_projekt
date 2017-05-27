@@ -29,3 +29,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
 
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);
 });
+
+
+require 'controllers/blog.php';
+require 'controllers/user.php';
