@@ -36,6 +36,26 @@ angular
         controller: 'BlogitemCtrl',
         controllerAs: 'blogItem'
       })
+      .when('/user', {
+        templateUrl: 'views/user.html',
+        controller: 'UserCtrl',
+        controllerAs: 'user'
+      })
+      .when('/userEdit', {
+        templateUrl: 'views/useredit.html',
+        controller: 'UsereditCtrl',
+        controllerAs: 'userEdit'
+      })
+      .when('/routes', {
+        templateUrl: 'views/routes.html',
+        controller: 'RoutesCtrl',
+        controllerAs: 'routes'
+      })
+      .when('/route/:id', {
+        templateUrl: 'views/route.html',
+        controller: 'RouteCtrl',
+        controllerAs: 'route'
+      })
       .otherwise({
         redirectTo: '/'
       });
