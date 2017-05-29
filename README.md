@@ -33,21 +33,8 @@ Run `grunt` for prod building and `grunt serve` for developing
 ```
 
 
-#php virtualhost for backend api
+# backed api
 
-```
-<VirtualHost *:80>
-    SetEnv APPLICATION_ENV "development"
-    ServerName carpoolingapi.dev
-    DocumentRoot "/Users/grzegorz/OneDrive/Uczelnie/UEK/SPA/spa_projekt/backend/web"
-    <Directory "/Users/grzegorz/OneDrive/Uczelnie/UEK/SPA/spa_projekt/backend/web">
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Order allow,deny
-        Allow from all
-    </Directory>
-    Header set Access-Control-Allow-Origin "*"
-    Header always set Access-Control-Allow-Methods "POST, PUT, GET, DELETE, OPTIONS"
-    Header always set Access-Control-Allow-Headers "Content-Type"
-</VirtualHost>
-```
+creatend in python with phalcon framework
+go to python-server and run
+`pip install -r requirements.tx`
