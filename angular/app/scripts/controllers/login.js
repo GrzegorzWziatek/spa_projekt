@@ -8,10 +8,25 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('LoginCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('LoginCtrl', function ($scope) {
+
+    $scope.validate = function(form) {
+      console.log(form);
+      // wyjdz jak nie zwalidowany for
+      if (!form.$valid) {
+        return;
+      }
+
+      //
+
+      var enteredData = {
+        email : $scope.email,
+        password: $scope.password
+      };
+
+      console.log(enteredData);
+      debugger;
+    }
+
+
   });
