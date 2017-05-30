@@ -35,6 +35,6 @@ Run `grunt` for prod building and `grunt serve` for developing
 
 # backed api
 
-creatend in python with phalcon framework
+creatend in python with flask framework
 go to python-server and run
 `pip install -r requirements.tx`
