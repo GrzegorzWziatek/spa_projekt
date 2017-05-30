@@ -42,17 +42,18 @@ def main():
 @app.route('/user/login')
 def login():
     c = conn.cursor()
-    email = 'test@test.pl'
-    password = 'test'
+    email = request.values.get('email', '')
+    password = request.values.get('password', '')
+
     c.execute('SELECT *  FROM user WHERE email = ?  AND password = ? LIMIT 1',
               [email, password])
     data = c.fetchone()
 
-    if c.arraysize > 0:
+    if data and c.arraysize > 0:
         return json_response({'status': 'OK', 'data': {'user': data['user_id'], 'login': data['login']}},
                              [[USER_COOKIE, data['user_id']]])
 
-    return json_response({'status': 'ERROR'})
+    return json_response({'status': 'ERROR', 'data': {'message': 'Incorrect email or password'}})
 
 
 @app.route('/register')
