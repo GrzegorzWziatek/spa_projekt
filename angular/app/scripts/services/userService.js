@@ -19,7 +19,6 @@ angular.module('carpoolingApp')
         url: base +':5000/user/login',
         data: data
       }).then(function successCallback(response) {
-        console.log(response);
         if (response.data.status === 'OK') {
           $rootScope.userId = response.data.data.user;
           $rootScope.userLogin = response.data.data.login;
