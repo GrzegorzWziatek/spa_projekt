@@ -8,7 +8,7 @@
  * Service in the carpoolingApp.
  */
 angular.module('carpoolingApp')
-  .service('registerService', ['$http', '$rootScope' function ($http, $rootScope) {
+  .service('registerService', ['$http', '$rootScope', function ($http, $rootScope) {
 
     var base = window.location.protocol + '//' + window.location.hostname;
 
@@ -24,10 +24,10 @@ angular.module('carpoolingApp')
           $rootScope.userId = response.data.data.user;
           $rootScope.userLogin = response.data.data.login;
           $rootScope.userLogged = true;
-          callback(true)
+          callback(true);
         } else {
           window.alert('An error occured, please try again: ' + response.data.data.message);
-          callback(false)
+          callback(false);
         }
 
       }, function errorCallback() {
@@ -39,4 +39,4 @@ angular.module('carpoolingApp')
 
 
 
-  });
+  }]);

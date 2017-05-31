@@ -29,7 +29,7 @@ angular.module('carpoolingApp')
         if (logged){
         $location.path('/');
         }
-      })
+      });
 
     };
 

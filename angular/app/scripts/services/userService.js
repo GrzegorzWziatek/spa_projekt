@@ -12,7 +12,7 @@ angular.module('carpoolingApp')
 
     var base = window.location.protocol + '//' + window.location.hostname;
 
-    this.login = function (data, cb) {
+    this.login = function (data, callback) {
 
       $http({
         method: 'POST',
@@ -23,15 +23,15 @@ angular.module('carpoolingApp')
           $rootScope.userId = response.data.data.user;
           $rootScope.userLogin = response.data.data.login;
           $rootScope.userLogged = true;
-          cb(true)
+          callback(true);
         } else {
           window.alert('An error occured, please try again');
-          cb(false)
+          callback(false);
         }
 
       }, function errorCallback() {
         window.alert('An error occured, please try again');
-        cb(false);
+        callback(false);
       });
 
     };
@@ -65,7 +65,7 @@ angular.module('carpoolingApp')
       $http({
         method: 'GET',
         url: base +':5000/user/logout'
-      }).then(function successCallback(response) {
+      }).then(function successCallback() {
         $rootScope.userId = '';
         $rootScope.userLogged = false;
         $rootScope.userLogin = '';
