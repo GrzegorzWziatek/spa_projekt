@@ -26,11 +26,14 @@ def json_response(data, cookies=[]):
                     mimetype='application/json')
     resp.headers['Access-Control-Allow-Origin'] = '*'
     if cookies:
+        domain = '.' + request.headers['Host']
+        domain = domain.replace(":5000", "")
+        print(domain)
         for c in cookies:
             if len(c) == 3:
-                resp.set_cookie(c[0], str(c[1]), expires=0)
+                resp.set_cookie(c[0], str(c[1]), expires=c[2], domain=domain)
             else:
-                resp.set_cookie(c[0], str(c[1]))
+                resp.set_cookie(c[0], str(c[1]), domain=domain)
     return resp
 
 
@@ -55,8 +58,10 @@ def login():
     data = c.fetchone()
 
     if data and c.arraysize > 0:
+        expire_date = datetime.datetime.now()
+        expire_date = expire_date + datetime.timedelta(days=10)
         return json_response({'status': 'OK', 'data': {'user': data['user_id'], 'login': data['login']}},
-                             [[USER_COOKIE, data['user_id']]])
+                             [[USER_COOKIE, data['user_id'], expire_date]])
 
     return json_response({'status': 'ERROR', 'data': {'message': 'Incorrect email or password'}})
 
@@ -67,6 +72,7 @@ def logout():
 @app.route('/user/logged')
 def is_logged():
     uid = request.cookies.get(USER_COOKIE, '-1')
+    print(uid)
     logged = False
     if int(uid) > 0:
         logged = True
@@ -293,4 +299,4 @@ def save_blog():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)

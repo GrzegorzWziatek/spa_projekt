@@ -25,7 +25,7 @@ angular.module('carpoolingApp')
           $rootScope.userLogged = true;
           callback(true);
         } else {
-          window.alert('An error occured, please try again');
+          window.alert(response.data.data.message);
           callback(false);
         }
 
@@ -41,7 +41,7 @@ angular.module('carpoolingApp')
       if (!$rootScope.checkedLogin) {
         $http({
           method: 'GET',
-          url: base +':5000/user/logout'
+          url: base +':5000/user/logged'
         }).then(function successCallback(response) {
           var logged = response.data.logged;
           var uid = response.data.uid;
