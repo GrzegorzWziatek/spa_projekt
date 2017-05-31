@@ -12,7 +12,7 @@ angular.module('carpoolingApp')
 
     $scope.id = $routeParams.id;
 
-    alert($scope.id);
+    window.alert($scope.id);
 
 
   });

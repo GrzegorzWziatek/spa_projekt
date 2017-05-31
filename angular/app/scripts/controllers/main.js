@@ -8,8 +8,8 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('MainCtrl', function () {
+  .controller('MainCtrl', ['userService', '$scope', function (userService, $scope) {
+    userService.isLogged();
+    console.log($scope);
 
-    console.log('main app');
-
-  });
+  }]);

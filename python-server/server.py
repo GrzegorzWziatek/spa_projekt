@@ -5,9 +5,11 @@ import json
 import traceback
 import logging
 import datetime
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 
 import sqlite3
 
@@ -25,8 +27,10 @@ def json_response(data, cookies=[]):
     resp.headers['Access-Control-Allow-Origin'] = '*'
     if cookies:
         for c in cookies:
-            print(c)
-            resp.set_cookie(c[0], str(c[1]))
+            if len(c) == 3:
+                resp.set_cookie(c[0], str(c[1]), expires=0)
+            else:
+                resp.set_cookie(c[0], str(c[1]))
     return resp
 
 
@@ -39,11 +43,12 @@ def main():
     return 'Hello from api'
 
 
-@app.route('/user/login')
+@app.route('/user/login', methods=['POST'])
 def login():
     c = conn.cursor()
-    email = request.values.get('email', '')
-    password = request.values.get('password', '')
+    data = request.json
+    email = data.get('email', '')
+    password = data.get('password', '')
 
     c.execute('SELECT *  FROM user WHERE email = ?  AND password = ? LIMIT 1',
               [email, password])
@@ -55,16 +60,28 @@ def login():
 
     return json_response({'status': 'ERROR', 'data': {'message': 'Incorrect email or password'}})
 
+@app.route('/user/logout')
+def logout():
+    return json_response({'status': 'OK'},  [[USER_COOKIE, '-1', True]])
 
-@app.route('/user/register')
+@app.route('/user/logged')
+def is_logged():
+    uid = request.cookies.get(USER_COOKIE, '-1')
+    logged = False
+    if int(uid) > 0:
+        logged = True
+    return json_response({'status': 'OK', 'logged': logged})
+
+
+@app.route('/user/register', methods=['POST'])
 def register():
     c = conn.cursor()
-    email = request.values.get('email', '')
-    password = request.values.get('password', '')
-    login = request.values.get('login', '')
-    car = request.values.get('car', '')
-    plates = request.values.get('plates', '')
-    desc = request.values.get('desc', '')
+    email = request.json.get('email', '')
+    password = request.json.get('password', '')
+    login = request.json.get('login', '')
+    car = request.json.get('car', '')
+    plates = request.json.get('plates', '')
+    desc = request.json.get('desc', '')
 
     check_email = conn.cursor()
     check_email.execute('SELECT * FROM user WHERE email = ? LIMIT 1', (email,))
@@ -155,10 +172,10 @@ def get_route(id):
         return json_response({'status': 'ERROR'})
 
 
-@app.route('/routes/join')
+@app.route('/routes/join', methods=['POST'])
 def join_route():
     c = conn.cursor()
-    route_id = request.values.get('route_id', '')
+    route_id = request.json.get('route_id', '')
     user = request.cookies.get(USER_COOKIE, 0)
 
     # check parameters
@@ -186,10 +203,10 @@ def join_route():
         logging.error(traceback.format_exc())
         return json_response({'status': 'ERROR', 'data': {'message': 'Database error. Please try again.'}})
 
-@app.route('/routes/leave')
+@app.route('/routes/leave', methods=['POST'])
 def leave_route():
     c = conn.cursor()
-    route_id = request.values.get('route_id', '')
+    route_id = request.json.get('route_id', '')
     user = request.cookies.get(USER_COOKIE, 0)
 
     # check parameters
@@ -250,12 +267,12 @@ def get_post(id):
     return json_response({'status': 'ERROR', 'data': {'message': 'Blog post not found'}})
 
 
-@app.route('/blog/save')
+@app.route('/blog/save', methods=['POST'])
 def save_blog():
     c = conn.cursor()
     now = datetime.datetime.now()
-    title = request.values.get('title', '')
-    text = request.values.get('text', '')
+    title = request.json.get('title', '')
+    text = request.json.get('text', '')
     date = now.strftime("%Y-%m-%d %H:%M")
     user = request.cookies.get(USER_COOKIE, 0)
 

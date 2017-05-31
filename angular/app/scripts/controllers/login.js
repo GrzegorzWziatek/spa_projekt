@@ -8,25 +8,30 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('LoginCtrl', function ($scope) {
+  .controller('LoginCtrl',['$scope', 'userService', '$location', function ($scope, userService, $location) {
+    // redirect if logged
+    if (userService.isLogged()) {
+      $location.path('/');
+    }
 
     $scope.validate = function(form) {
-      console.log(form);
       // wyjdz jak nie zwalidowany for
       if (!form.$valid) {
         return;
       }
-
-      //
 
       var enteredData = {
         email : $scope.email,
         password: $scope.password
       };
 
-      console.log(enteredData);
-      debugger;
-    }
+      userService.login(enteredData, function(logged) {
+        if (logged){
+        $location.path('/');
+        }
+      })
+
+    };
 
 
-  });
+  }]);
