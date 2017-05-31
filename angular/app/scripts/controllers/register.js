@@ -8,10 +8,13 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('RegisterCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('RegisterCtrl', ['userService', '$location', function (userService, $location) {
+
+  if (userService.isLogged()) {
+      $location.path('/');
+    }
+
+
+
+
+  }]);
