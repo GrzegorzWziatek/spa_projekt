@@ -49,14 +49,17 @@ All requests shoud point to http://carpooling.dev:5000 with actions
 
 ### /user/login
 params: email, password
+
 login user
 
 ### /user/register
 params: email, password, login, car, plates, desc
+
 registers and login new user
 
 ### /user/get/<string:id>
 params: <string:id>  - id user to get
+
 retrieve user data
 
 ### /routes 
@@ -65,14 +68,17 @@ retrieves list of available routes
 ### /routes/<string:id>
 
 params: <string:id>  - id route to get
+
 retrieves route data
 
 ### /routes/join
 params: route_id
+
 signs user for route
 
 ### /routes/leave
 params: route_id
+
 unsigns user from route
 
 
@@ -81,10 +87,12 @@ retrieves list of available blog posts
 
 ### /blog/post/<string:id>
 params:  <string:id>  id of post blog to get
+
 retrives blog post details
 
 ### /blog/save
 params: title,text
+
 saves blog post, requires logged user
 
 
