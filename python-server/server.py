@@ -56,7 +56,7 @@ def login():
     return json_response({'status': 'ERROR', 'data': {'message': 'Incorrect email or password'}})
 
 
-@app.route('/register')
+@app.route('/user/register')
 def register():
     c = conn.cursor()
     email = request.values.get('email', '')
@@ -102,21 +102,121 @@ def get_user(id):
     return json_response({'status': 'ERROR', 'data': {'message': 'User not found'}})
 
 
+def process_route_row(route_row):
+    if route_row.get('passengers', 0) < route_row.get('max_passengers', 0):
+        route_row['can_book'] = True
+    else:
+        route_row['can_book'] = False
+    return route_row
+
 @app.route('/routes')
 def get_routes():
     c = conn.cursor()
 
     try:
-        c.execute('SELECT *  FROM routes WHERE date("NOW") <= date(date) AND passengers < max_passengers')
+        c.execute('SELECT *  FROM routes WHERE date("NOW") <= date(date) ORDER BY date(date) DESC')
         data = c.fetchall()
 
         ret = []
         if c.arraysize > 0:
             for row in data:
-                ret.append(get_row_dict(row))
+                ret.append(process_route_row(get_row_dict(row)))
         return json_response({'status': 'OK', 'data': {'routes': ret}})
     except:
         return json_response({'status': 'ERROR'})
+
+
+@app.route('/routes/<string:id>')
+def get_route(id):
+    c = conn.cursor()
+
+    try:
+        c.execute('SELECT *  FROM routes LEFT JOIN user ON (routes.user_id = user.user_id) WHERE route_id=?', (id,))
+        route = c.fetchone()
+
+        print(route)
+
+        if route is not None:
+            route = process_route_row(get_row_dict(route))
+        else:
+            return json_response({'status': 'ERROR', 'data': { 'message': 'There is no such route.'}})
+
+        route_users = []
+        c.execute('SELECT * FROM route_user LEFT JOIN user ON (route_user.user_id = user.user_id) WHERE route_id = ?', (id,))
+        data = c.fetchall()
+        if (data is not None) > 0:
+            for row in data:
+                tmp = get_row_dict(row)
+                tmp.pop('password', None)
+                route_users.append(tmp)
+        return json_response({'status': 'OK', 'data': {'route': route, 'passengers': route_users}})
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return json_response({'status': 'ERROR'})
+
+
+@app.route('/routes/join')
+def join_route():
+    c = conn.cursor()
+    route_id = request.values.get('route_id', '')
+    user = request.cookies.get(USER_COOKIE, 0)
+
+    # check parameters
+    if route_id == '':
+        return json_response({'status': 'ERROR', 'data': {'message': 'An error has occured. Are you logged in?.'}})
+
+    # check if already signed
+
+    check = conn.cursor()
+    check.execute('SELECT * FROM route_user WHERE route_id = ? AND user_id = ? LIMIT 1', (route_id, user))
+    check_data = check.fetchone()
+
+    if check_data is not None:
+        return json_response({'status': 'ERROR', 'data': {'message': 'Already joined route'}})
+
+    #otherwise insert it to table
+    try:
+        c.execute('INSERT INTO route_user (route_id, user_id) values (?,?)',
+                  [route_id, user])
+        c.execute('UPDATE routes SET passengers = passengers + 1 WHERE route_id = ?', (route_id,))
+
+        conn.commit()
+        return json_response({'status': 'OK'})
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return json_response({'status': 'ERROR', 'data': {'message': 'Database error. Please try again.'}})
+
+@app.route('/routes/leave')
+def leave_route():
+    c = conn.cursor()
+    route_id = request.values.get('route_id', '')
+    user = request.cookies.get(USER_COOKIE, 0)
+
+    # check parameters
+    if route_id == '' or user == 0:
+        return json_response({'status': 'ERROR', 'data': {'message': 'An error has occured. Are you logged in?.'}})
+
+
+    # check if user is signed for route
+    check = conn.cursor()
+    check.execute('SELECT * FROM route_user WHERE route_id = ? AND user_id = ? LIMIT 1', (route_id, user))
+    check_data = check.fetchone()
+
+    if check_data is None:
+        return json_response({'status': 'ERROR', 'data': {'message': 'You were not signed for this route'}})
+
+    #otherwise do job
+    try:
+        c.execute('DELETE FROM route_user WHERE route_id = ? AND user_id =?',
+                  [route_id, user])
+        c.execute('UPDATE routes SET passengers = passengers - 1 WHERE route_id = ?', (route_id,))
+
+        conn.commit()
+        return json_response({'status': 'OK'})
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return json_response({'status': 'ERROR', 'data': {'message': 'Database error. Please try again.'}})
+
 
 @app.route('/blog')
 def get_blogs():
