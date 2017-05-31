@@ -9,7 +9,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-CORS(app)
+#CORS(app)
 
 import sqlite3
 
@@ -18,15 +18,24 @@ conn.row_factory = sqlite3.Row
 USER_COOKIE = 'uid'
 
 
+@app.after_request
+def apply_headers(resp):
+    origin = request.headers['Origin'] or '*'
+    resp.headers['Access-Control-Allow-Origin'] = origin
+    resp.headers['Access-Control-Allow-Credentials'] = 'true'
+    resp.headers['Access-Control-Allow-Headers'] = 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name'
+    return resp
+
 # return json
 def json_response(data, cookies=[]):
     encoded = json.dumps(data)
     resp = Response(response=encoded,
                     status=200,
                     mimetype='application/json')
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+
     if cookies:
-        domain = '.' + request.headers['Host']
+        domain = request.headers['Host']
+        domain = '.' + domain
         domain = domain.replace(":5000", "")
         print(domain)
         for c in cookies:

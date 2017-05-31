@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-angular
+var app = angular
   .module('carpoolingApp', [
     'ngAnimate',
     'ngAria',
@@ -18,8 +18,9 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch'
-  ])
-  .config(function ($routeProvider) {
+  ]);
+
+  app.config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -74,4 +75,10 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+
+      $httpProvider.defaults.withCredentials = true;
   });
+
+  app.run(['userService', function(userService) {
+    userService.isLogged();
+  }]);
