@@ -1,1 +1,18 @@
-<p>This is the blog view.</p>
+ <div class="row">
+    <div class="offset-s-4 col-s-4">
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Short Description</th>
+            <th>Date</th>
+          </tr>
+          <tr ng-repeat="x in blogS">
+            <td><a href="#">{{x.title}} </a></td>
+            <td>{{x.text}} </td>
+            <td> {{x.date}}</td>
+          </tr>
+        </table>
+    <br>
+    </div>
+  </div>
+

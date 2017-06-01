@@ -8,10 +8,16 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('BlogCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('BlogCtrl',['$scope', 'blogService', 'userService', '$location', function ($scope, blogService, userService, $location) {
+    if (userService.isLogged()) {
+        blogService.blog(function (retPosts) {
+          if (retPosts)
+          {
+            $scope.blogS = retPosts;
+          }
+        });
+
+    }
+
+
+  }]);
