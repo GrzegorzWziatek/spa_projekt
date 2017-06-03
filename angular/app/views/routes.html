@@ -1,15 +1,14 @@
 <div class="row">
   <div class="offset-s-4 col-s-4">
-    <table ng-show="userLogged">
+    <table>
       <tr>
         <th>Route from</th>
         <th>Route to</th>
         <th>Description</th>
       </tr>
-      <tr ng-repeat="x in ??">
-        <td><a href="#/routes/{{x.route_id}}">{{x.route_from}} </a></td>
-        <td>{{x.route_to  }} </td>
-        <td> {{x.desc | limitTo:10}}</td>
+      <tr ng-repeat="x in recReoutes">
+        <td><a href="#/routes/">{{x.route_from}} </a></td>
+        <td>{{x.route_to  }}</td>
       </tr>
     </table>
     <br>
