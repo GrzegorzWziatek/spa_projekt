@@ -1,6 +1,6 @@
  <div class="row">
     <div class="offset-s-4 col-s-4">
-        <table>
+        <table ng-show="userLogged">
           <tr>
             <th>Title</th>
             <th>Short Description</th>
@@ -20,16 +20,16 @@
    <div class="col-md-6" style="float:none; margin; 0 auto;">
      <form name="newPost" ng-submit="validate(newPost)">
        <div class="form-group">
-         <label class='control-label'>Title</label>
-         <input type='text' name="title" ng-model="title" ng-required="required" required class='form-control'/>
+         <label class='control-label' ng-show="userLogged">Title</label>
+         <input type='text' name="title" ng-model="title" ng-required="required" required class='form-control'  ng-show="userLogged"/>
 
          <span class="error" ng-show="newPost.title.$error.required">
         Required!</span>
 
        </div>
        <div class="form-group">
-         <label class='control-label'>Text</label>
-         <input type='text' name="text" ng-model="text" ng-required="required" required class='form-control'/>
+         <label class='control-label' ng-show="userLogged">Text</label>
+         <input type='text' name="text" ng-model="text" ng-required="required" required class='form-control' ng-show="userLogged"/>
 
          <span class="error" ng-show="newPost.text.$error.required">
         Required!</span>
@@ -37,7 +37,7 @@
        </div>
 
        <div class='form-group'>
-         <button type='submit' class='btn btn-primary'> Add </button>
+         <button type='submit' class='btn btn-primary' ng-show="userLogged"> Add </button>
        </div>
      </form>
    </div>

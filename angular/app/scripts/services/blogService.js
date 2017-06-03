@@ -27,8 +27,24 @@ angular.module('carpoolingApp')
       });
     };
 
-    this.save = function (callback) {
+    this.save = function (data, callback) {
+      $http({
+        method: 'POST',
+        url: base +':5000/blog/save',
+        data: data
+      }).then(function successCallback(response) {
+        if (response.data.status === 'OK') {
+          $rootScope.blog_id = response.data.data.id;
+          callback(true);
+        } else {
+          window.alert(response.data.data.message);
+          callback(false);
+        }
 
+      }, function errorCallback() {
+        window.alert('An error occured, please try again');
+        callback(false);
+      });
     };
 
   }]);

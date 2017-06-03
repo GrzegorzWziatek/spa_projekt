@@ -9,7 +9,7 @@
  */
 angular.module('carpoolingApp')
   .controller('BlogitemCtrl',['$scope', 'blogitemService', 'userService', '$routeParams', function ($scope, blogitemService, userService, $routeParams) {
-    //if (userService.isLogged()) {
+    if (userService.isLogged()) {
     $scope.id = $routeParams.id;
 
 
@@ -20,7 +20,7 @@ angular.module('carpoolingApp')
       }
     });
 
-    //}
+    }
 
   }]);
 
