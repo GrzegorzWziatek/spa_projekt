@@ -13,7 +13,6 @@ angular.module('carpoolingApp')
     var base = window.location.protocol + '//' + window.location.hostname;
 
     this.login = function (data, callback) {
-
       $http({
         method: 'POST',
         url: base +':5000/user/login',

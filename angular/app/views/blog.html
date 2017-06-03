@@ -7,8 +7,8 @@
             <th>Date</th>
           </tr>
           <tr ng-repeat="x in blogS">
-            <td><a href="#">{{x.title}} </a></td>
-            <td>{{x.text}} </td>
+            <td><a href="#/blogItem/{{x.blog_id}}">{{x.title}} </a></td>
+            <td>{{x.text  | limitTo:10}} </td>
             <td> {{x.date}}</td>
           </tr>
         </table>
