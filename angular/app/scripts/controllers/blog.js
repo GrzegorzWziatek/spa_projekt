@@ -9,7 +9,7 @@
  */
 angular.module('carpoolingApp')
   .controller('BlogCtrl',['$scope', 'blogService', 'userService', '$location', function ($scope, blogService, userService, $location) {
-    if (userService.isLogged()) {
+ //   if (userService.isLogged()) {
         blogService.blog(function (retPosts) {
           if (retPosts)
           {
@@ -17,7 +17,22 @@ angular.module('carpoolingApp')
           }
         });
 
-    }
+        $scope.validate = function(form) {
+          if (!form.$valid) {
+           return;
+          }
 
+         var enteredData = {
+           title: $scope.title,
+           text: $scope.text
+          };
+            blogService.save(enteredData, function(saved) {
+            if (saved){
+              $location.path('/#blog');
+            }
+          });
+
+        };
+  //  }
 
   }]);

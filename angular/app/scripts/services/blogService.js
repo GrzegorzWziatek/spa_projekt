@@ -27,4 +27,8 @@ angular.module('carpoolingApp')
       });
     };
 
+    this.save = function (callback) {
+
+    };
+
   }]);
