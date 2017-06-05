@@ -20,7 +20,7 @@ USER_COOKIE = 'uid'
 
 @app.after_request
 def apply_headers(resp):
-    origin = request.headers['Origin'] or '*'
+    origin = request.headers.get('Origin', None) or '*'
     resp.headers['Access-Control-Allow-Origin'] = origin
     resp.headers['Access-Control-Allow-Credentials'] = 'true'
     resp.headers['Access-Control-Allow-Headers'] = 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name'
@@ -146,7 +146,7 @@ def get_routes():
     c = conn.cursor()
 
     try:
-        c.execute('SELECT *  FROM routes WHERE date("NOW") <= date(date) ORDER BY date(date) DESC')
+        c.execute('SELECT *  FROM routes WHERE date("NOW") <= date(date) ORDER BY strftime("%s", date) ASC')
         data = c.fetchall()
 
         ret = []
@@ -255,7 +255,7 @@ def get_blogs():
     c = conn.cursor()
 
     try:
-        c.execute('SELECT *  FROM blog ORDER BY date(DATE) DESC')
+        c.execute('SELECT *  FROM blog ORDER BY blog_id DESC')
         data = c.fetchall()
 
         ret = []
