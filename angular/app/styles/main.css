@@ -1,3 +1,9 @@
+.inline-block {
+  display: inline-block;
+  vertical-align: top;
+}
+
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;

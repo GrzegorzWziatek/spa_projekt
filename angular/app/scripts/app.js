@@ -17,7 +17,8 @@ var app = angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'angularTrix'
   ]);
 
   app.config(function ($routeProvider, $httpProvider) {
@@ -71,6 +72,16 @@ var app = angular
         templateUrl: 'views/logout.html',
         controller: 'LogoutCtrl',
         controllerAs: 'logout'
+      })
+      .when('/addBlog', {
+        templateUrl: 'views/addblog.html',
+        controller: 'AddblogCtrl',
+        controllerAs: 'addBlog'
+      })
+      .when('/addRoute', {
+        templateUrl: 'views/addroute.html',
+        controller: 'AddrouteCtrl',
+        controllerAs: 'addRoute'
       })
       .otherwise({
         redirectTo: '/'
