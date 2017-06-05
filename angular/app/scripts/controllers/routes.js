@@ -8,12 +8,12 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('RoutesCtrl',['$scope', 'routesService','userService', '$location', '$rootScope', function ($scope, routesService, userService, $location, $rootScope) {
+  .controller('RoutesCtrl',['$scope', 'routesService','userService', '$location', function ($scope, routesService, userService, $location) {
     //if (userService.isLogged()) {
-      routesService.getroutes(function (retRoutes) {
+      routesService.routeS(function (retRoutes) {
         if (retRoutes)
         {
-          $scope.recReoutes = retRoutes;
+          $scope.recRoutes = retRoutes;
         }
       });
     //}

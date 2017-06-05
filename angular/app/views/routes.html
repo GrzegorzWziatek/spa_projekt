@@ -6,9 +6,10 @@
         <th>Route to</th>
         <th>Description</th>
       </tr>
-      <tr ng-repeat="x in recReoutes">
-        <td><a href="#/routes/">{{x.route_from}} </a></td>
+      <tr ng-repeat="x in recRoutes">
+        <td><a href="#/routes/{{x.route_id}}">{{x.route_from}} </a></td>
         <td>{{x.route_to  }}</td>
+        <td> {{x.desc}}</td>
       </tr>
     </table>
     <br>
