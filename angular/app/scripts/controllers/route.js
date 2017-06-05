@@ -15,7 +15,7 @@ angular.module('carpoolingApp')
       routeService.post($scope.id, function (retPosts) {
         if (retPosts)
         {
-          $scope.posT = retPosts;
+          $scope.recRoute = retPosts;
         }
       });
 
