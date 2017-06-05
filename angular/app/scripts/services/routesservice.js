@@ -27,14 +27,19 @@ angular.module('carpoolingApp')
       });
     }
 
-    this.post = function (data, callback) {
+    this.routE = function (data, callback) {
       $http({
         method: 'GET',
         url: base +':5000/routes/' + data
       }).then(function successCallback(response) {
         if (response.data.status === 'OK'){
-          $rootScope.route = response.data.data;
-          callback($rootScope.route);
+          var receivedData = {
+            route : response.data.data.route,
+            passengers: response.data.data.passengers
+          };
+          $rootScope.route = response.data.data.route;
+          $rootScope.passengers = response.data.data.passengers;
+          callback(receivedData);
         }
       }, function errorCallback() {
         window.alert('An error occured, please try again');

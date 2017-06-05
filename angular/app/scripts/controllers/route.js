@@ -12,10 +12,11 @@ angular.module('carpoolingApp')
     if (userService.isLogged()) {
       $scope.id = $routeParams.id;
 
-      routesService.post($scope.id, function (retPosts) {
-        if (retPosts)
+      routesService.routE($scope.id, function (retRoute) {
+        if (retRoute)
         {
-          $scope.recRoute = retPosts;
+          $scope.recRoute = retRoute.route;
+          $scope.passengers = retRoute.passengers;
         }
       });
 
