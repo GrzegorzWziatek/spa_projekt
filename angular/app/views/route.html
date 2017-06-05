@@ -1,23 +1,28 @@
-<div class="row">
-  <div class="offset-s-4 col-s-4">
-    <table>
-      <tr>
-        <th>Route from </th>
-        <th>Route to  </th>
-        <th>Date </th>
-        <th>Passengers  </th>
-        <th>Max passengers </th>
-        <th>Description </th>
-      </tr>
-      <tr>
-        <td> {{recRoute.route_from}} </td>
-        <td> {{recRoute.route_to }} </td>
-        <td> {{recRoute.date}} </td>
-        <td> {{recRoute.passengers}} </td>
-        <td> {{recRoute.max_passengers }} </td>
-        <td> {{recRoute.desc}} </td>
-      </tr>
-    </table>
-    <br>
+<div class="container">
+
+  <div class="page-header">
+    <h3> Trasa {{ route.route_from}} do {{ route.route_to }}</h3>
+    <p>Data przejazdu: {{ route.dateObj | date : 'yyyy-MM-dd HH:mm' }}</p>
   </div>
+
+
+
+
 </div>
+
+
+<pre>
+  {{ route | json }}
+</pre>
+
+
+<pre>
+  from lat
+  {{ from | json}}
+</pre>
+
+
+<pre>
+  to lat
+  {{ to | json}}
+</pre>

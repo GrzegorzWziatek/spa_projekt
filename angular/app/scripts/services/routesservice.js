@@ -18,23 +18,28 @@ angular.module('carpoolingApp')
         url: base + ':5000/routes'
       }).then(function successCallback(response) {
         if (response.data.status === 'OK') {
-          $rootScope.routes = response.data.data.routes;
-          callback($rootScope.routes);
+
+          for (var i = 0; i < response.data.data.routes.length; i++) {
+            response.data.data.routes[i].dateObj = new Date(response.data.data.routes[i].date);
+          }
+
+          callback(response.data.data.routes);
         }
       }, function errorCallback() {
         window.alert('An error occured, please try again');
         callback(false);
       });
-    }
+    };
 
-    this.post = function (data, callback) {
+    this.getRoute = function (data, callback) {
       $http({
         method: 'GET',
         url: base +':5000/routes/' + data
       }).then(function successCallback(response) {
         if (response.data.status === 'OK'){
-          $rootScope.post = response.data.data;
-          callback($rootScope.post);
+          var route = response.data.data.route;
+          route.dateObj = new Date(route.date);
+          callback(route);
         }
       }, function errorCallback() {
         window.alert('An error occured, please try again');
