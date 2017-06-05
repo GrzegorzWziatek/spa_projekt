@@ -19,6 +19,9 @@ angular.module('carpoolingApp')
       }).then(function successCallback(response) {
         if (response.data.status === 'OK'){
           $rootScope.posts = response.data.data.posts;
+          for (var i =0; i <  $rootScope.posts.length; i++) {
+            $rootScope.posts[i].dateObj = new Date($rootScope.posts[i].date);
+          }
           callback($rootScope.posts);
         }
       }, function errorCallback() {
