@@ -39,14 +39,26 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
+              <li class="">
+                <a class="dropdown-toggle" href="#/">Strona główna </a>
+              </li>
+
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">Strona głównaa
+                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">Blog
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="#/">Strona Główna</a></li>
                   <li><a ng-href="#/blog">Blog</a></li>
-                  <li><a ng-href="#/routes">Routes</a></li>
+                  <li><a ng-href="#/addBlog" ng-show="userLogged">Dodaj blog</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">Trasy
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a ng-href="#/routes">Trasy</a></li>
+                  <li><a ng-href="#/addRoute" ng-show="userLogged">Dodaj trasę</a></li>
                 </ul>
               </li>
               <li class="pull-right">
@@ -69,8 +81,8 @@
 
     <div class="footer">
       <div class="container">
-        <p><span class="glyphicon glyphicon-user"></span> Grzegorz Wziątek
-           <span class="glyphicon glyphicon-user"></span> Artur Fujak </p>
+        <p class="inline-block"><span class="glyphicon glyphicon-user"></span> Grzegorz Wziątek </p> &nbsp;&nbsp;&nbsp;
+        <p class="inline-block"><span class="glyphicon glyphicon-user"></span> Artur Fujak </p>
       </div>
     </div>
 
@@ -89,6 +101,8 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/trix/dist/trix.js"></script>
+    <script src="bower_components/angular-trix/dist/angular-trix.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -108,10 +122,12 @@
         <script src="scripts/controllers/register.js"></script>
         <script src="scripts/controllers/logout.js"></script>
         <script src="scripts/services/registerservice.js"></script>
-        <script src="scripts/services/blogservice.js"></script>
+        <script src="scripts/services/blogService.js"></script>
         <script src="scripts/services/blogitemservice.js"></script>
         <script src="scripts/services/routesservice.js"></script>
         <script src="scripts/services/routeservice.js"></script>
+        <script src="scripts/controllers/addblog.js"></script>
+        <script src="scripts/controllers/addroute.js"></script>
         <!-- endbuild -->
 </body>
 </html>
