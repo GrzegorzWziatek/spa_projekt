@@ -271,7 +271,7 @@ def get_blogs():
 def get_post(id):
     c = conn.cursor()
 
-    c.execute('SELECT *  FROM blog WHERE blog_id = ?', (id,))
+    c.execute('SELECT *  FROM blog  LEFT JOIN user ON (blog.user_id = user.user_id) WHERE blog_id = ? ', (id,))
     data = c.fetchone()
 
     if c.arraysize > 0:
