@@ -11,7 +11,7 @@ angular.module('carpoolingApp')
   .controller('RouteCtrl',['$scope', 'routeService', 'userService', '$routeParams', function ($scope, routeService, userService, $routeParams) {
     if (userService.isLogged()) {
       $scope.id = $routeParams.id;
-      
+
       routeService.post($scope.id, function (retPosts) {
         if (retPosts)
         {
