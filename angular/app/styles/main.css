@@ -3,6 +3,9 @@
   vertical-align: top;
 }
 
+.block-item {
+  display: block;
+}
 
 .browsehappy {
   margin: 0.2em 0;

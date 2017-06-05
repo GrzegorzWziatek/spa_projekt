@@ -10,32 +10,13 @@
 
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="x in blogS">
-      <a href="#/blogItem/{{x.blog_id}}">
+      <a href="#/blogItem/{{x.blog_id}}" class="block-item">
         {{x.title}}
-        <span class="pull-right"> {{x.date | date : 'yyyy-mm-dd'}}</span>
+        <span class="pull-right"> {{x.dateObj | date : 'yyyy-MM-dd HH:mm'}}</span>
       </a>
     </li>
 
   </ul>
-
-  <div class="row">
-    <div class="offset-s-4 col-s-4">
-      <table ng-show="userLogged">
-        <tr>
-          <th>Title</th>
-          <th>Short Description</th>
-          <th>Date</th>
-        </tr>
-        <tr ng-repeat="x in blogS">
-          <td><a href="#/blogItem/{{x.blog_id}}">{{x.title}} </a></td>
-          <td>{{x.text  | limitTo:10}} </td>
-          <td> {{x.date}}</td>
-          <td> {{x|json}}</td>
-        </tr>
-      </table>
-      <br>
-    </div>
-  </div>
 
 </div>
 
