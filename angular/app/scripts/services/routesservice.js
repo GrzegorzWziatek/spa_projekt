@@ -33,8 +33,8 @@ angular.module('carpoolingApp')
         url: base +':5000/routes/' + data
       }).then(function successCallback(response) {
         if (response.data.status === 'OK'){
-          $rootScope.post = response.data.data;
-          callback($rootScope.post);
+          $rootScope.route = response.data.data;
+          callback($rootScope.route);
         }
       }, function errorCallback() {
         window.alert('An error occured, please try again');
