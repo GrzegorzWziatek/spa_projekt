@@ -18,28 +18,63 @@ angular.module('carpoolingApp')
         url: base + ':5000/routes'
       }).then(function successCallback(response) {
         if (response.data.status === 'OK') {
-          $rootScope.routes = response.data.data.routes;
-          callback($rootScope.routes);
+
+          for (var i = 0; i < response.data.data.routes.length; i++) {
+            response.data.data.routes[i].dateObj = new Date(response.data.data.routes[i].date);
+          }
+
+          callback(response.data.data.routes);
         }
       }, function errorCallback() {
         window.alert('An error occured, please try again');
         callback(false);
       });
-    }
+    };
 
-    this.routE = function (data, callback) {
+    this.getRoute = function (data, callback) {
       $http({
         method: 'GET',
         url: base +':5000/routes/' + data
       }).then(function successCallback(response) {
         if (response.data.status === 'OK'){
-          var receivedData = {
-            route : response.data.data.route,
-            passengers: response.data.data.passengers
-          };
-          $rootScope.route = response.data.data.route;
-          $rootScope.passengers = response.data.data.passengers;
-          callback(receivedData);
+          var route = response.data.data.route;
+          route.dateObj = new Date(route.date);
+          callback(route, response.data.data.passengers);
+        }
+      }, function errorCallback() {
+        window.alert('An error occured, please try again');
+        callback(false);
+      });
+    };
+
+
+    this.joinRoute = function (data, callback) {
+      $http({
+        method: 'POST',
+        url: base +':5000/routes/join',
+        data: {
+          route_id : data
+        }
+      }).then(function successCallback(response) {
+        if (response.data.status === 'OK'){
+          callback(true);
+        }
+      }, function errorCallback() {
+        window.alert('An error occured, please try again');
+        callback(false);
+      });
+    };
+
+    this.leaveRoute = function (data, callback) {
+      $http({
+        method: 'POST',
+        url: base +':5000/routes/leave',
+        data: {
+          route_id : data
+        }
+      }).then(function successCallback(response) {
+        if (response.data.status === 'OK'){
+          callback(true);
         }
       }, function errorCallback() {
         window.alert('An error occured, please try again');

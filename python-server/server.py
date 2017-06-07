@@ -5,7 +5,10 @@ import json
 import traceback
 import logging
 import datetime
+from dateutil import parser
+import uuid
 from flask_cors import CORS
+from flask import send_file
 
 
 app = Flask(__name__)
@@ -20,7 +23,7 @@ USER_COOKIE = 'uid'
 
 @app.after_request
 def apply_headers(resp):
-    origin = request.headers['Origin'] or '*'
+    origin = request.headers.get('Origin', None) or '*'
     resp.headers['Access-Control-Allow-Origin'] = origin
     resp.headers['Access-Control-Allow-Credentials'] = 'true'
     resp.headers['Access-Control-Allow-Headers'] = 'Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name'
@@ -146,7 +149,7 @@ def get_routes():
     c = conn.cursor()
 
     try:
-        c.execute('SELECT *  FROM routes WHERE date("NOW") <= date(date) ORDER BY date(date) DESC')
+        c.execute('SELECT *  FROM routes WHERE date("NOW") <= date(date) ORDER BY strftime("%s", date) ASC')
         data = c.fetchall()
 
         ret = []
@@ -161,27 +164,84 @@ def get_routes():
 @app.route('/routes/<string:id>')
 def get_route(id):
     c = conn.cursor()
+    user = request.cookies.get(USER_COOKIE, 0)
 
     try:
         c.execute('SELECT *  FROM routes LEFT JOIN user ON (routes.user_id = user.user_id) WHERE route_id=?', (id,))
         route = c.fetchone()
 
-        print(route)
-
         if route is not None:
-            route = process_route_row(get_row_dict(route))
+            route = get_row_dict(route)
+            route = process_route_row(route)
         else:
             return json_response({'status': 'ERROR', 'data': { 'message': 'There is no such route.'}})
 
         route_users = []
         c.execute('SELECT * FROM route_user LEFT JOIN user ON (route_user.user_id = user.user_id) WHERE route_id = ?', (id,))
         data = c.fetchall()
-        if (data is not None) > 0:
+
+        if (data is not None):
             for row in data:
                 tmp = get_row_dict(row)
+                if int(tmp.get('user_id', 0)) == int(user):
+                    route['user_joined'] = True
                 tmp.pop('password', None)
                 route_users.append(tmp)
         return json_response({'status': 'OK', 'data': {'route': route, 'passengers': route_users}})
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return json_response({'status': 'ERROR'})
+
+
+@app.route('/routes/ical/<string:id>')
+def get_ical(id):
+    c = conn.cursor()
+    user = request.cookies.get(USER_COOKIE, 0)
+
+    try:
+        c.execute('SELECT *  FROM routes LEFT JOIN user ON (routes.user_id = user.user_id) WHERE route_id=?  ', (id))
+        route = c.fetchone()
+
+        if route is not None:
+            route = process_route_row(get_row_dict(route))
+            print(route)
+
+            dt = parser.parse(route['date'])
+            dt2 = dt + datetime.timedelta(hours=2)
+
+            with open('my.ics', 'w') as f:
+                f.write('BEGIN:VCALENDAR\n')
+                f.write('VERSION:2.0\n')
+                f.write('PRODID:-//WA//FRWEB//EN\n')
+                f.write('BEGIN:VEVENT\n')
+
+                summary = "Prejazd z carpooling"
+                begin_date = dt.strftime("%Y%m%dT%H%M%S")
+                end_date = dt2.strftime("%Y%m%dT%H%M%S")
+                uid = str(uuid.uuid4()) + 'carpooling'
+                location = route['route_from']
+                organizer = route['email']
+                description = 'Przejazd z:' + route['route_from'] + 'do: ' + route['route_to'] + '\nOpis: ' + route['desc_route']
+
+                f.write('SUMMARY:%s\n' % summary)
+                f.write('DTSTART:%s\n' % begin_date)
+                f.write('DTEND:%s\n' % end_date)
+                f.write('UID:%s\n' % uid)
+                f.write('LOCATION:%s\n' % location)
+                f.write('ORGANIZER:MAILTO:%s\n' % organizer)
+                f.write('DESCRIPTION:%s\n' % description)
+                f.write('END:VEVENT\n')
+                f.write('END:VCALENDAR')
+
+            return send_file('my.ics',
+                             mimetype='text/calendar',
+                             attachment_filename='event.ics',
+                             as_attachment=True)
+
+        else:
+            return json_response({'status': 'ERROR', 'data': { 'message': 'There is no such route.'}})
+
+
     except Exception as e:
         logging.error(traceback.format_exc())
         return json_response({'status': 'ERROR'})
@@ -255,7 +315,7 @@ def get_blogs():
     c = conn.cursor()
 
     try:
-        c.execute('SELECT *  FROM blog ORDER BY date(DATE) DESC')
+        c.execute('SELECT *  FROM blog ORDER BY blog_id DESC')
         data = c.fetchall()
 
         ret = []
@@ -271,7 +331,7 @@ def get_blogs():
 def get_post(id):
     c = conn.cursor()
 
-    c.execute('SELECT *  FROM blog WHERE blog_id = ?', (id,))
+    c.execute('SELECT *  FROM blog  LEFT JOIN user ON (blog.user_id = user.user_id) WHERE blog_id = ?  ORDER BY date(date) DESC ', (id,))
     data = c.fetchone()
 
     if c.arraysize > 0:

@@ -10,19 +10,20 @@
 angular.module('carpoolingApp')
   .controller('AddblogCtrl', ['$scope', 'blogService', 'userService', '$location', function ($scope, blogService, userService, $location) {
 
-    $scope.validate = function(form) {
+    $scope.validate = function (form) {
       if (!form.$valid) {
         return;
       }
 
       var enteredData = {
-        title : $scope.title,
-        text :  $scope.text
+        title: $scope.title,
+        text: $scope.text
       };
 
-      blogService.save(enteredData, function(saved) {
-        if (saved){
-          $location.path('/#blog');
+      blogService.save(enteredData, function (id) {
+        if (id) {
+          var path = '/blogItem/' + id;
+          $location.path(path);
         }
       });
 

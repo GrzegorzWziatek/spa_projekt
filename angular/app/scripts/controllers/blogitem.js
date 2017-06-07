@@ -8,15 +8,15 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('BlogitemCtrl',['$scope', 'blogitemService', 'userService', '$routeParams', function ($scope, blogitemService, userService, $routeParams) {
+  .controller('BlogitemCtrl',['$scope', 'blogService', 'userService', '$routeParams', function ($scope, blogService, userService, $routeParams) {
     if (userService.isLogged()) {
     $scope.id = $routeParams.id;
 
 
-    blogitemService.posts($scope.id, function (retPosts) {
+    blogService.getPost($scope.id, function (retPosts) {
       if (retPosts)
       {
-        $scope.postS = retPosts;
+        $scope.post = retPosts;
       }
     });
 
