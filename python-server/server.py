@@ -5,8 +5,10 @@ import json
 import traceback
 import logging
 import datetime
+from dateutil import parser
+import uuid
 from flask_cors import CORS
-from ics import Calendar, Event
+from flask import send_file
 
 
 app = Flask(__name__)
@@ -197,14 +199,45 @@ def get_ical(id):
     user = request.cookies.get(USER_COOKIE, 0)
 
     try:
-        c.execute('SELECT *  FROM routes LEFT JOIN user ON (routes.user_id = user.user_id) WHERE route_id=?  AND user.user_id = ?', (id, user))
+        c.execute('SELECT *  FROM routes LEFT JOIN user ON (routes.user_id = user.user_id) WHERE route_id=?  ', (id))
         route = c.fetchone()
-
-        print(route)
 
         if route is not None:
             route = process_route_row(get_row_dict(route))
             print(route)
+
+            dt = parser.parse(route['date'])
+            dt2 = dt + datetime.timedelta(hours=2)
+
+            with open('my.ics', 'w') as f:
+                f.write('BEGIN:VCALENDAR\n')
+                f.write('VERSION:2.0\n')
+                f.write('PRODID:-//WA//FRWEB//EN\n')
+                f.write('BEGIN:VEVENT\n')
+
+                summary = "Prejazd z carpooling"
+                begin_date = dt.strftime("%Y%m%dT%H%M%S")
+                end_date = dt2.strftime("%Y%m%dT%H%M%S")
+                uid = str(uuid.uuid4()) + 'carpooling'
+                location = route['route_from']
+                organizer = route['email']
+                description = 'Przejazd z:' + route['route_from'] + 'do: ' + route['route_to'] + '\nOpis: ' + route['desc_route']
+
+                f.write('SUMMARY:%s\n' % summary)
+                f.write('DTSTART:%s\n' % begin_date)
+                f.write('DTEND:%s\n' % end_date)
+                f.write('UID:%s\n' % uid)
+                f.write('LOCATION:%s\n' % location)
+                f.write('ORGANIZER:MAILTO:%s\n' % organizer)
+                f.write('DESCRIPTION:%s\n' % description)
+                f.write('END:VEVENT\n')
+                f.write('END:VCALENDAR')
+
+            return send_file('my.ics',
+                             mimetype='text/calendar',
+                             attachment_filename='event.ics',
+                             as_attachment=True)
+
         else:
             return json_response({'status': 'ERROR', 'data': { 'message': 'There is no such route.'}})
 
