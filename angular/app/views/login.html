@@ -4,19 +4,19 @@
     <form name="loginForm" ng-submit="validate(loginForm)">
       <div class="form-group">
         <label class='control-label'>Email</label>
-        <input type='email' name="email" ng-model="email" ng-required="required" required class='form-control'/>
+        <input type='email' name="email" ng-model="email" ng-required="true" required class='form-control'/>
 
-        <span class="error" ng-show="loginForm.email.$error.required">
+        <span class="error" ng-show="loginForm.email.$error.required && loginForm.email.$touched">
         Required!</span>
-        <span class="error" ng-show="loginForm.email.$error.email">
+        <span class="error" ng-show="loginForm.email.$error.email && loginForm.email.$touched">
         Not valid email!</span>
 
       </div>
       <div class="form-group">
         <label class='control-label'>Password</label>
-        <input type='password' name="password" ng-model="password" ng-required="required" required class='form-control'/>
+        <input type='password' name="password" ng-model="password" ng-required="true" required class='form-control'/>
 
-         <span class="error" ng-show="loginForm.password.$error.required">
+         <span class="error" ng-show="loginForm.password.$error.required && loginForm.password.$touched">
         Required!</span>
 
       </div>

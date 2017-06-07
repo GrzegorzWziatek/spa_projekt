@@ -7,9 +7,9 @@
       <form name="newPost" ng-submit="validate(newPost)">
         <div class="form-group">
           <label class='control-label' ng-show="userLogged">Tytuł</label>
-          <input type='text' name="title" ng-model="title" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+          <input type='text' name="title" ng-model="title" ng-required="true" required class='form-control'  ng-show="userLogged"/>
 
-          <span class="error" ng-show="newPost.title.$error.required">
+          <span class="error" ng-show="newPost.title.$error.required && newPost.title.$touched">
         Pole wymagane!</span>
 
         </div>
@@ -17,7 +17,7 @@
           <label class='control-label' ng-show="userLogged">Tekst</label>
           <trix-editor angular-trix ng-model="text"></trix-editor>
 
-          <span class="error" ng-show="newPost.text.$error.required">
+          <span class="error" ng-show="newPost.text.$error.required && newPost.text.$touched">
         Pole wymagane!</span>
 
         </div>
