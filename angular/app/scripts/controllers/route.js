@@ -17,18 +17,17 @@ angular.module('carpoolingApp')
       if (route)
       {
         $scope.route = route;
-        geo.getAddress(route.route_from, function (data) {
-          $scope.from = data;
-        });
+        geo.getMultipleAddress([route.route_from,route.route_to], $scope.hasGeo);
 
-        geo.getAddress(route.route_to, function (data) {
-          $scope.to = data;
-        });
       }
       if (passengers){
         $scope.passengers = passengers;
       }
     });
+
+    $scope.hasGeo = function(data) {
+      console.log(data)
+    }
 
 
     $scope.join = function() {
