@@ -4,7 +4,7 @@
 
   <div class="row">
     <div class="col-md-6" style="float:none; margin; 0 auto;">
-      <form name="newPost" ng-submit="validate(newRoute)">
+      <form name="newRoute" ng-submit="validate(newRoute)">
         <div class="form-group">
           <label class='control-label' ng-show="userLogged">Start trasy</label>
           <input type='text' name="routeFrom" ng-model="routeFrom" ng-required="required" required class='form-control'  ng-show="userLogged"/>
@@ -50,7 +50,7 @@
           <label class='control-label' ng-show="userLogged">Opis</label>
           <trix-editor angular-trix ng-model="text"></trix-editor>
 
-          <span class="error" ng-show="newPost.text.$error.required">
+          <span class="error" ng-show="newRoute.text.$error.required">
         Pole wymagane!</span>
 
         </div>
