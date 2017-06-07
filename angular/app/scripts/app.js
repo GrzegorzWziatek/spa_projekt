@@ -18,7 +18,8 @@ var app = angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'angularTrix'
+    'angularTrix',
+    'ae-datetimepicker'
   ]);
 
   app.config(function ($routeProvider, $httpProvider) {

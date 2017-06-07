@@ -310,6 +310,34 @@ def leave_route():
         return json_response({'status': 'ERROR', 'data': {'message': 'Database error. Please try again.'}})
 
 
+@app.route('/routes/add', methods=['POST'])
+def add_route():
+    c = conn.cursor()
+    user = request.cookies.get(USER_COOKIE, 0)
+    passengers = 0
+    route_from = request.json.get('route_from', '')
+    route_to = request.json.get('route_to', '')
+    date = request.json.get('date', '')
+    max_passengers = request.json.get('max_passengers', '0')
+    desc_route = request.json.get('desc_route', '')
+    price = float(request.json.get('price', '0.0'))
+
+    if route_from == '' or route_to == '' or user == 0 or len(date) == 0 or max_passengers == 0:
+        return json_response({'status': 'ERROR', 'data': {'message': 'An error has occured. Check if all fields are filled.'}})
+
+    #insert if ok
+    try:
+        c.execute('INSERT INTO routes (passengers, route_from, route_to, date, max_passengers, desc_route, price, user_id ) values (?,?,?,?,?,?,?,?)',
+                  [passengers, route_from, route_to, date, max_passengers, desc_route, price, user])
+
+        conn.commit()
+        route_id = c.lastrowid
+        return json_response({'status': 'OK', 'data': {'id': route_id, }})
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return json_response({'status': 'ERROR', 'data': {'message': 'Database error. Please try again.'}})
+
+
 @app.route('/blog')
 def get_blogs():
     c = conn.cursor()

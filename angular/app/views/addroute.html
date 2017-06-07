@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" >
 
   <h1> Dodaj nowa trase</h1>
 
@@ -6,49 +6,49 @@
     <div class="col-md-6" style="float:none; margin; 0 auto;">
       <form name="newRoute" ng-submit="validate(newRoute)">
         <div class="form-group">
-          <label class='control-label' ng-show="userLogged">Start trasy</label>
-          <input type='text' name="route_from" ng-model="route_from" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+          <label class='control-label' >Start trasy</label>
+          <input type='text' name="route_from" ng-model="route_from" ng-required="true" required class='form-control'  />
 
-          <span class="error" ng-show="newRoute.route_from.$error.required">
+          <span class="error" ng-show="newRoute.route_from.$error.required && newRoute.route_from.$touched">
         Pole wymagane!</span>
 
         </div>
 
         <div class="form-group">
-          <label class='control-label' ng-show="userLogged">Koniec trasy</label>
-          <input type='text' name="route_to" ng-model="route_to" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+          <label class='control-label' >Koniec trasy</label>
+          <input type='text' name="route_to" ng-model="route_to" ng-required="true" required class='form-control'  />
 
-          <span class="error" ng-show="newRoute.route_to.$error.required">
+          <span class="error" ng-show="newRoute.route_to.$error.required  && newRoute.route_to.$touched>
         Pole wymagane!</span>
 
         </div>
         <div class="form-group">
-          <label class='control-label' ng-show="userLogged">Data wyjazdu</label>
-          <input type='text' name="date" ng-model="date" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+          <label class='control-label' >Data wyjazdu</label>
+          <input type='text' datetimepicker options="options" name="date" ng-model="date" ng-required="true" required class='form-control'  />
 
-          <span class="error" ng-show="newRoute.date.$error.required">
+          <span class="error" ng-show="newRoute.date.$error.required && newRoute.date.$touched">
         Pole wymagane!</span>
 
         </div>
         <div class="form-group">
-          <label class='control-label' ng-show="userLogged">Liczba pasażerów</label>
-          <input type='text' name="max_passengers" ng-model="max_passengers" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+          <label class='control-label' >Liczba pasażerów</label>
+          <input type='number' name="max_passengers" ng-model="max_passengers" ng-required="true" required class='form-control'  />
 
-          <span class="error" ng-show="newRoute.max_passengers.$error.required">
+          <span class="error" ng-show="newRoute.max_passengers.$error.required && newRoute.max_passengers">
         Pole wymagane!</span>
 
         </div>
         <div class="form-group">
-          <label class='control-label' ng-show="userLogged">Cena</label>
-          <input type='text' name="price" ng-model="price" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+          <label class='control-label' >Cena</label>
+          <input type='text' name="price" ng-model="price" ng-required="true" required class='form-control'  />
 
-          <span class="error" ng-show="newRoute.price.$error.required">
+          <span class="error" ng-show="newRoute.price.$error.required && newRoute.price.$touched">
         Pole wymagane!</span>
 
         </div>
         <div class="form-group">
-          <label class='control-label' ng-show="userLogged">Opis</label>
-          <trix-editor angular-trix ng-model="desc_route"></trix-editor>
+          <label class='control-label' >Opis</label>
+          <trix-editor angular-trix ng-model="desc_route" ng-required="true"></trix-editor>
 
           <span class="error" ng-show="newRoute.desc_route.$error.required">
         Pole wymagane!</span>
@@ -56,7 +56,7 @@
         </div>
 
         <div class='form-group'>
-          <button type='submit' class='btn btn-primary' ng-show="userLogged"> Add </button>
+          <button type='submit' class='btn btn-primary' ng-disabled="newRoute.$invalid" > Add </button>
         </div>
       </form>
     </div>
