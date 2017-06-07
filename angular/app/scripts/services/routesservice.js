@@ -81,4 +81,23 @@ angular.module('carpoolingApp')
         callback(false);
       });
     };
+
+    this.save = function (data, callback) {
+      $http({
+        method: 'POST',
+        url: base + ':5000/routes/add',
+        data: data
+      }).then(function successCallback(response) {
+        if (response.data.status === 'OK') {
+          callback(response.data.data.id);
+        } else {
+          window.alert(response.data.data.message);
+          callback(false);
+        }
+
+      }, function errorCallback() {
+        window.alert('An error occured, please try again');
+        callback(false);
+      });
+    };
 }]);
