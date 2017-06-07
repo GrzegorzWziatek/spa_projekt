@@ -16,12 +16,12 @@ angular.module('carpoolingApp')
       }
 
       var enteredData = {
-        routeFrom: $scope.routeFrom,
-        routeTo: $scope.routeTo,
+        route_from: $scope.route_from,
+        route_to: $scope.route_to,
         date: $scope.date,
-        maxPassengers: $scope.maxPassengers,
+        max_passengers: $scope.max_passengers,
         price: $scope.price,
-        text: $scope.text
+        desc_route: $scope.desc_route
       };
 
       routesService.save(enteredData, function (id) {

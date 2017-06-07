@@ -7,18 +7,18 @@
       <form name="newRoute" ng-submit="validate(newRoute)">
         <div class="form-group">
           <label class='control-label' ng-show="userLogged">Start trasy</label>
-          <input type='text' name="routeFrom" ng-model="routeFrom" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+          <input type='text' name="route_from" ng-model="route_from" ng-required="required" required class='form-control'  ng-show="userLogged"/>
 
-          <span class="error" ng-show="newRoute.routeFrom.$error.required">
+          <span class="error" ng-show="newRoute.route_from.$error.required">
         Pole wymagane!</span>
 
         </div>
 
         <div class="form-group">
           <label class='control-label' ng-show="userLogged">Koniec trasy</label>
-          <input type='text' name="routeTo" ng-model="routeTo" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+          <input type='text' name="route_to" ng-model="route_to" ng-required="required" required class='form-control'  ng-show="userLogged"/>
 
-          <span class="error" ng-show="newRoute.routeTo.$error.required">
+          <span class="error" ng-show="newRoute.route_to.$error.required">
         Pole wymagane!</span>
 
         </div>
@@ -32,9 +32,9 @@
         </div>
         <div class="form-group">
           <label class='control-label' ng-show="userLogged">Liczba pasażerów</label>
-          <input type='text' name="maxPassengers" ng-model="maxPassengers" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+          <input type='text' name="max_passengers" ng-model="max_passengers" ng-required="required" required class='form-control'  ng-show="userLogged"/>
 
-          <span class="error" ng-show="newRoute.maxPassengers.$error.required">
+          <span class="error" ng-show="newRoute.max_passengers.$error.required">
         Pole wymagane!</span>
 
         </div>
@@ -48,9 +48,9 @@
         </div>
         <div class="form-group">
           <label class='control-label' ng-show="userLogged">Opis</label>
-          <trix-editor angular-trix ng-model="text"></trix-editor>
+          <trix-editor angular-trix ng-model="desc_route"></trix-editor>
 
-          <span class="error" ng-show="newRoute.text.$error.required">
+          <span class="error" ng-show="newRoute.desc_route.$error.required">
         Pole wymagane!</span>
 
         </div>
