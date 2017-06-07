@@ -8,11 +8,12 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('RouteCtrl',['$scope', 'routesService', 'geo', '$routeParams', function ($scope, routesService, geo, $routeParams) {
+  .controller('RouteCtrl',['$scope', 'routesService', 'geo', '$routeParams', '$location', function ($scope, routesService, geo, $routeParams, $location) {
     $scope.id = $routeParams.id;
 
 
-    routesService.getRoute($scope.id, function (route) {
+    routesService.getRoute($scope.id, function (route, passengers) {
+    console.log(arguments);
       if (route)
       {
         $scope.route = route;
@@ -24,7 +25,27 @@ angular.module('carpoolingApp')
           $scope.to = data;
         });
       }
+      if (passengers){
+        $scope.passengers = passengers;
+      }
     });
+
+
+    $scope.join = function() {
+      routesService.joinRoute($scope.id, function(done) {
+        if (done) {
+          window.location.reload();
+        }
+      });
+    };
+
+    $scope.leave = function() {
+      routesService.leaveRoute($scope.id, function(done) {
+        if (done) {
+          window.location.reload();
+        }
+      });
+    };
 
 
 

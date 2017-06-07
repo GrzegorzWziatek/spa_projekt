@@ -6,6 +6,7 @@ import traceback
 import logging
 import datetime
 from flask_cors import CORS
+from ics import Calendar, Event
 
 
 app = Flask(__name__)
@@ -161,27 +162,53 @@ def get_routes():
 @app.route('/routes/<string:id>')
 def get_route(id):
     c = conn.cursor()
+    user = request.cookies.get(USER_COOKIE, 0)
 
     try:
         c.execute('SELECT *  FROM routes LEFT JOIN user ON (routes.user_id = user.user_id) WHERE route_id=?', (id,))
         route = c.fetchone()
 
-        print(route)
-
         if route is not None:
-            route = process_route_row(get_row_dict(route))
+            route = get_row_dict(route)
+            route = process_route_row(route)
         else:
             return json_response({'status': 'ERROR', 'data': { 'message': 'There is no such route.'}})
 
         route_users = []
         c.execute('SELECT * FROM route_user LEFT JOIN user ON (route_user.user_id = user.user_id) WHERE route_id = ?', (id,))
         data = c.fetchall()
-        if (data is not None) > 0:
+
+        if (data is not None):
             for row in data:
                 tmp = get_row_dict(row)
+                if int(tmp.get('user_id', 0)) == int(user):
+                    route['user_joined'] = True
                 tmp.pop('password', None)
                 route_users.append(tmp)
         return json_response({'status': 'OK', 'data': {'route': route, 'passengers': route_users}})
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        return json_response({'status': 'ERROR'})
+
+
+@app.route('/routes/ical/<string:id>')
+def get_ical(id):
+    c = conn.cursor()
+    user = request.cookies.get(USER_COOKIE, 0)
+
+    try:
+        c.execute('SELECT *  FROM routes LEFT JOIN user ON (routes.user_id = user.user_id) WHERE route_id=?  AND user.user_id = ?', (id, user))
+        route = c.fetchone()
+
+        print(route)
+
+        if route is not None:
+            route = process_route_row(get_row_dict(route))
+            print(route)
+        else:
+            return json_response({'status': 'ERROR', 'data': { 'message': 'There is no such route.'}})
+
+
     except Exception as e:
         logging.error(traceback.format_exc())
         return json_response({'status': 'ERROR'})

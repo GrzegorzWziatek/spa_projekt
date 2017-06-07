@@ -6,13 +6,16 @@
   </div>
 
 
-
+  <button ng-if="!route.user_joined" type="button" class="btn btn-default" ng-click="join()">Dołącz do kierowcy</button>
+  <button ng-if="route.user_joined"  type="button" class="btn btn-danger" ng-click="leave()">Zrezygnuj z przejazdu</button>
 
 </div>
 
 
 <pre>
   {{ route | json }}
+  passengers:
+  {{ passengers | json }}
 </pre>
 
 

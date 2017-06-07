@@ -39,7 +39,42 @@ angular.module('carpoolingApp')
         if (response.data.status === 'OK'){
           var route = response.data.data.route;
           route.dateObj = new Date(route.date);
-          callback(route);
+          callback(route, response.data.data.passengers);
+        }
+      }, function errorCallback() {
+        window.alert('An error occured, please try again');
+        callback(false);
+      });
+    };
+
+
+    this.joinRoute = function (data, callback) {
+      $http({
+        method: 'POST',
+        url: base +':5000/routes/join',
+        data: {
+          route_id : data
+        }
+      }).then(function successCallback(response) {
+        if (response.data.status === 'OK'){
+          callback(true);
+        }
+      }, function errorCallback() {
+        window.alert('An error occured, please try again');
+        callback(false);
+      });
+    };
+
+    this.leaveRoute = function (data, callback) {
+      $http({
+        method: 'POST',
+        url: base +':5000/routes/leave',
+        data: {
+          route_id : data
+        }
+      }).then(function successCallback(response) {
+        if (response.data.status === 'OK'){
+          callback(true);
         }
       }, function errorCallback() {
         window.alert('An error occured, please try again');
