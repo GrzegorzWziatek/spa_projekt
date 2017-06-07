@@ -1,1 +1,66 @@
-<p>This is the addRoute view.</p>
+<div class="container">
+
+  <h1> Dodaj nowa trase</h1>
+
+  <div class="row">
+    <div class="col-md-6" style="float:none; margin; 0 auto;">
+      <form name="newPost" ng-submit="validate(newRoute)">
+        <div class="form-group">
+          <label class='control-label' ng-show="userLogged">Start trasy</label>
+          <input type='text' name="routeFrom" ng-model="routeFrom" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+
+          <span class="error" ng-show="newRoute.title.$error.required">
+        Pole wymagane!</span>
+
+        </div>
+
+        <div class="form-group">
+          <label class='control-label' ng-show="userLogged">Koniec trasy</label>
+          <input type='text' name="routeTo" ng-model="routeTo" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+
+          <span class="error" ng-show="newRoute.title.$error.required">
+        Pole wymagane!</span>
+
+        </div>
+        <div class="form-group">
+          <label class='control-label' ng-show="userLogged">Data wyjazdu</label>
+          <input type='text' name="date" ng-model="date" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+
+          <span class="error" ng-show="newRoute.title.$error.required">
+        Pole wymagane!</span>
+
+        </div>
+        <div class="form-group">
+          <label class='control-label' ng-show="userLogged">Liczba pasażerów</label>
+          <input type='text' name="maxPassengers" ng-model="maxPassengers" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+
+          <span class="error" ng-show="newRoute.title.$error.required">
+        Pole wymagane!</span>
+
+        </div>
+        <div class="form-group">
+          <label class='control-label' ng-show="userLogged">Cena</label>
+          <input type='text' name="price" ng-model="price" ng-required="required" required class='form-control'  ng-show="userLogged"/>
+
+          <span class="error" ng-show="newRoute.title.$error.required">
+        Pole wymagane!</span>
+
+        </div>
+        <div class="form-group">
+          <label class='control-label' ng-show="userLogged">Opis</label>
+          <trix-editor angular-trix ng-model="text"></trix-editor>
+
+          <span class="error" ng-show="newPost.text.$error.required">
+        Pole wymagane!</span>
+
+        </div>
+
+        <div class='form-group'>
+          <button type='submit' class='btn btn-primary' ng-show="userLogged"> Add </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+</div>
