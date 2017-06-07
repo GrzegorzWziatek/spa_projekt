@@ -9,7 +9,7 @@
           <label class='control-label' ng-show="userLogged">Start trasy</label>
           <input type='text' name="routeFrom" ng-model="routeFrom" ng-required="required" required class='form-control'  ng-show="userLogged"/>
 
-          <span class="error" ng-show="newRoute.title.$error.required">
+          <span class="error" ng-show="newRoute.routeFrom.$error.required">
         Pole wymagane!</span>
 
         </div>
@@ -18,7 +18,7 @@
           <label class='control-label' ng-show="userLogged">Koniec trasy</label>
           <input type='text' name="routeTo" ng-model="routeTo" ng-required="required" required class='form-control'  ng-show="userLogged"/>
 
-          <span class="error" ng-show="newRoute.title.$error.required">
+          <span class="error" ng-show="newRoute.routeTo.$error.required">
         Pole wymagane!</span>
 
         </div>
@@ -26,7 +26,7 @@
           <label class='control-label' ng-show="userLogged">Data wyjazdu</label>
           <input type='text' name="date" ng-model="date" ng-required="required" required class='form-control'  ng-show="userLogged"/>
 
-          <span class="error" ng-show="newRoute.title.$error.required">
+          <span class="error" ng-show="newRoute.date.$error.required">
         Pole wymagane!</span>
 
         </div>
@@ -34,7 +34,7 @@
           <label class='control-label' ng-show="userLogged">Liczba pasażerów</label>
           <input type='text' name="maxPassengers" ng-model="maxPassengers" ng-required="required" required class='form-control'  ng-show="userLogged"/>
 
-          <span class="error" ng-show="newRoute.title.$error.required">
+          <span class="error" ng-show="newRoute.maxPassengers.$error.required">
         Pole wymagane!</span>
 
         </div>
@@ -42,7 +42,7 @@
           <label class='control-label' ng-show="userLogged">Cena</label>
           <input type='text' name="price" ng-model="price" ng-required="required" required class='form-control'  ng-show="userLogged"/>
 
-          <span class="error" ng-show="newRoute.title.$error.required">
+          <span class="error" ng-show="newRoute.price.$error.required">
         Pole wymagane!</span>
 
         </div>
