@@ -1,5 +1,20 @@
+<div class="jumbotron">
+  <h2>Lista dostępnych wycieczek</h2>
+  <p>Chcesz szybko tanio i bezpiecznie dostać się z punktu A do B?</p>
+  <p>Nic prostszego! Przejrzyj listę dostępnych tras i załatw sobie transport!</p>
+
+</div>
+
 <div ng-repeat="x in recRoutes">
   <a href="#/route/{{x.route_id}}">{{x.route_from}} </a>
+
+  <div ng-if="x.can_book == true">
+    <span class="label label-success">Wolne miejsca!</span>
+  </div>
+  <div ng-if="x.can_book != true">
+    <span class="label label-danger">Brak miejsc!</span>
+  </div>
+
   <pre>
     {{ x | json}}
   </pre>
