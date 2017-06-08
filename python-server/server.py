@@ -221,7 +221,7 @@ def get_ical(id):
                 uid = str(uuid.uuid4()) + 'carpooling'
                 location = route['route_from']
                 organizer = route['email']
-                description = 'Przejazd z:' + route['route_from'] + 'do: ' + route['route_to'] + '\nOpis: ' + route['desc_route']
+                description = 'Przejazd z:' + route['route_from'] + ' do: ' + route['route_to'] + '\nOpis: ' + route['desc_route']
 
                 f.write('SUMMARY:%s\n' % summary)
                 f.write('DTSTART:%s\n' % begin_date)

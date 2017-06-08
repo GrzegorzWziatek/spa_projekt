@@ -6,29 +6,43 @@
   </div>
 
 
-  <button ng-if="!route.user_joined" type="button" class="btn btn-default" ng-click="join()">Dołącz do kierowcy</button>
-  <button ng-if="route.user_joined"  type="button" class="btn btn-danger" ng-click="leave()">Zrezygnuj z przejazdu</button>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">Dane kierowcy</div>
+        <div class="panel-body">
+          <p>Login: {{ route.login }}</p>
+          <p>Cena za przejazd: {{ route.price }}</p>
+          <p>Liczba pasażerów: {{ route.passengers }}</p>
+          <p>Maksymalna liczba pasażerów: {{ route.max_passengers }}</p>
+          <p>Auto: {{ route.car }}</p>
+          <p>Numer rejestracyjny auta: {{ route.plates }}</p>
+          <p>Opis kierowcy: {{ route.desc }}</p>
+          <p>Opis trasy:</p>
+          <div ng-bind-html="route.desc_route"></div>
+        </div>
+      </div>
 
+      <div class="buttons" style="margin: 15px 0;">
+        <button ng-if="!route.user_joined" type="button" class="btn btn-default" ng-click="join()">Dołącz do kierowcy</button>
+        <button ng-if="route.user_joined" type="button" class="btn btn-primary" ng-click="ical()">Pobierz plik kalendarza
+        </button>
+        <button ng-if="route.user_joined" type="button" class="btn btn-danger" ng-click="leave()">Zrezygnuj z przejazdu
+        </button>
+      </div>
 
-  <ng-map center="[40.74, -74.18]" default-style="false" style="height: 450px; display: block;"></ng-map>
+    </div>
+    <div class="col-md-6">
+      <ng-map center="[40.74, -74.18]" default-style="false" style="height: 450px; display: block;">
+        <directions
+          draggable="true"
+          travel-mode="{{rq.travelMode}}"
+          origin="{{rq.origin}}"
+          destination="{{rq.destination}}">
+        </directions>
+      </ng-map>
+    </div>
+  </div>
+
 
 </div>
-
-
-<pre>
-  {{ route | json }}
-  passengers:
-  {{ passengers | json }}
-</pre>
-
-
-<pre>
-  from lat
-  {{ from | json}}
-</pre>
-
-
-<pre>
-  to lat
-  {{ to | json}}
-</pre>

@@ -10,7 +10,7 @@
 
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="x in blogS">
-      <a href="#/blogItem/{{x.blog_id}}" class="block-item">
+      <a href="#/blogItem/{{x.blog_id}}" class="block-item clearfix">
         {{x.title}}
         <span class="pull-right"> {{x.dateObj | date : 'yyyy-MM-dd HH:mm'}}</span>
       </a>

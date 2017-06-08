@@ -19,23 +19,12 @@ angular.module('carpoolingApp')
       {
         $scope.route = route;
         NgMap.getMap().then(function(map) {
-
-          var directionsDisplay = new google.maps.DirectionsRenderer();
-          var directionsService = new google.maps.DirectionsService();
-
-          var request = {
+          $scope.rq = {
             origin: $scope.route.route_from,
             destination: $scope.route.route_to,
             travelMode: google.maps.DirectionsTravelMode.DRIVING
           };
-          directionsService.route(request, function (response, status) {
-            if (status === google.maps.DirectionsStatus.OK) {
-              directionsDisplay.setDirections(response);
-              directionsDisplay.setMap(map);
-            } else {
-              alert('Google route unsuccesfull!');
-            }
-          });
+
 
         });
 
@@ -45,7 +34,9 @@ angular.module('carpoolingApp')
       }
     });
 
-
+    $scope.ical = function () {
+      window.open( window.location.protocol + '//' + window.location.hostname + ':5000/routes/ical/'+$scope.id)
+    };
 
     $scope.join = function() {
       routesService.joinRoute($scope.id, function(done) {
