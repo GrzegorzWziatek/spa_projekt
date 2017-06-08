@@ -20,8 +20,8 @@ angular.module('carpoolingApp')
         route_to: $scope.route_to,
         date: $scope.date.format("YYYY-MM-DD HH:mm:ss"),
         max_passengers: $scope.max_passengers,
-        price: $scope.price,
-        desc_route: $scope.desc_route
+        desc_route: $scope.desc_route,
+        price: $scope.price
       };
 
       routesService.save(enteredData, function (id) {
