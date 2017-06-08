@@ -9,6 +9,9 @@
   <button ng-if="!route.user_joined" type="button" class="btn btn-default" ng-click="join()">Dołącz do kierowcy</button>
   <button ng-if="route.user_joined"  type="button" class="btn btn-danger" ng-click="leave()">Zrezygnuj z przejazdu</button>
 
+
+  <ng-map center="[40.74, -74.18]" default-style="false" style="height: 450px; display: block;"></ng-map>
+
 </div>
 
 

@@ -19,7 +19,8 @@ var app = angular
     'ngSanitize',
     'ngTouch',
     'angularTrix',
-    'ae-datetimepicker'
+    'ae-datetimepicker',
+    'ngMap'
   ]);
 
   app.config(function ($routeProvider, $httpProvider) {
