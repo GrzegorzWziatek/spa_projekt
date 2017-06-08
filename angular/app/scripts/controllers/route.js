@@ -21,7 +21,6 @@ angular.module('carpoolingApp')
 
           var directionsDisplay = new google.maps.DirectionsRenderer();
           var directionsService = new google.maps.DirectionsService();
-          var geocoder = new google.maps.Geocoder();
 
           var request = {
             origin: $scope.route.route_from,

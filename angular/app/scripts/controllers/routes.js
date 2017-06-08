@@ -8,7 +8,7 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('RoutesCtrl',['$scope', 'routesService','userService', '$location', function ($scope, routesService, userService, $location) {
+  .controller('RoutesCtrl',['$scope', 'routesService', function ($scope, routesService) {
     //if (userService.isLogged()) {
       routesService.routeS(function (retRoutes) {
         if (retRoutes)

@@ -8,7 +8,7 @@
  * Controller of the carpoolingApp
  */
 angular.module('carpoolingApp')
-  .controller('BlogCtrl',['$scope', 'blogService', 'userService', '$location', function ($scope, blogService, userService, $location) {
+  .controller('BlogCtrl',['$scope', 'blogService', function ($scope, blogService) {
     blogService.blog(function (retPosts) {
       if (retPosts)
       {
