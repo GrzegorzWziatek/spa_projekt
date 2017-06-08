@@ -1,7 +1,10 @@
-# My project's README
+# Carpooling app README
+
+This app is an SPA app created by Grzegorz Wziątek & Artur Fujak
 
 
-# first install
+
+## first install
 `npm install -g grunt-cli bower yo generator-karma generator-angular`
 
 Install ruby:  http://rubyinstaller.org/downloads/
@@ -9,13 +12,13 @@ Install compass: `gem install compass`
 
 Then go to angular folder then type in console  `npm install`
 
-# develop
+## develop
 
 Run `grunt` for prod building and `grunt serve` for developing
 
 
 
-#php virtualhost for angular app
+## php virtualhost for angular app
 
 ```
 <VirtualHost *:80>
@@ -47,52 +50,72 @@ then run server:
 ## backend api methods:
 All requests shoud point to http://carpooling.dev:5000 with actions
 
-### /user/login
-params: email, password
+###### /user/login
+params: 
+* email 
+* password
 
 login user
 
-### /user/register
-params: email, password, login, car, plates, desc
+###### /user/register
+params: 
+* email
+* password
+* login
+* car, plates, desc
 
 registers and login new user
 
-### /user/get/<string:id>
-params: <string:id>  - id user to get
+###### /user/get/<string:id>
+params: 
+* <string:id>  - id user to get
 
 retrieve user data
 
-### /routes 
+###### /routes 
 retrieves list of available routes
 
-### /routes/<string:id>
-
-params: <string:id>  - id route to get
-
+###### /routes/<string:id>
 retrieves route data
 
-### /routes/join
-params: route_id
+params: 
+* ud <string:id>  - id route to get
 
+
+###### /routes/join
 signs user for route
 
-### /routes/leave
-params: route_id
+params: 
+* route_id
 
+
+
+######/routes/leave
 unsigns user from route
 
+params: 
+* route_id
 
-### /blog
+
+
+
+###### /blog
 retrieves list of available blog posts
 
-### /blog/post/<string:id>
-params:  <string:id>  id of post blog to get
-
+###### /blog/post/<string:id>
 retrives blog post details
 
-### /blog/save
-params: title,text
+params:  
+* <string:id>  id of post blog to get
 
+
+###### /blog/save
 saves blog post, requires logged user
+
+params: 
+* title
+* text
+
+
 
 
